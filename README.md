@@ -1,5 +1,9 @@
 # Cranfield Logistic Regression — Profitability of UK Firms
 
+![SAS](https://img.shields.io/badge/SAS-1B4F72?style=for-the-badge)
+![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Data](https://img.shields.io/badge/Data-429%20firms-blue?style=for-the-badge)
+
 A logistic regression analysis of what makes a firm profitable, using the
 Cranfield data on 429 UK private-sector firms. The analysis fits a full
 model, simplifies it by dropping firm size, and checks the fitted model
@@ -8,6 +12,36 @@ the intercept-only model.
 
 **Course:** MATH 6364 Statistical Methods, Fall 2023, University of Texas
 Rio Grande Valley
+
+## Key Results
+
+- **Simplified model** (Sector, Eval, Incent): AIC **545.751**, AUC **0.7048**
+- **Each extra incentive point** multiplies the odds of being profitable by **1.145**
+- **Formal evaluation** raises the odds of profitability by **1.581×**
+- **Sector matters most:** secondary-sector firms have far lower odds of
+  profitability than primary-sector firms (OR **0.133**)
+- **Firm size does not matter** once the other variables are in the model
+  (p = 0.4554) — dropping it improves AIC and SC
+- **209 of 429 firms** (48.7%) are profitable
+
+## Figures
+
+![Success proportions rise with the incentives index](images/success-proportions-incentive.png)
+
+*Success proportions vs. the incentives index — profitability climbs
+steadily as firms offer more incentives, from about 0.32 at an index of 0
+to about 0.80 at an index of 16.*
+
+![ROC curve for the simplified model](images/roc-curve.png)
+
+*ROC curve for the simplified model — area under the curve 0.7048,
+acceptable discrimination between profitable and unprofitable firms.*
+
+![Distribution of the deviance residuals](images/deviance-residuals-histogram.png)
+
+*Deviance residuals from the simplified model — the two clusters are the
+profitable and unprofitable firms; the mean is −0.0098, essentially zero,
+so the model shows no systematic bias.*
 
 ## Data
 
@@ -75,20 +109,7 @@ mean (t-test p = 0.8561), so the fitted model shows no systematic bias.
 The likelihood-ratio test against the intercept-only model
 (−2 Log L 594.438 vs. 535.751) strongly rejects the null.
 
-## Files
-
-```
-cranfield-logistic-regression/
-├── README.md
-├── code/
-│   └── cranfield_logistic_regression.sas   # SAS code for the full analysis
-├── data/
-│   └── Cranfield.csv                      # 429 firms
-└── report/
-    └── Cranfield_Logistic_Regression.pdf   # Full written report with SAS output
-```
-
-## How to run
+## How to Run
 
 Requires SAS with `PROC LOGISTIC`, `PROC SQL`, `PROC SGPLOT`, and
 `PROC UNIVARIATE`. Run `code/cranfield_logistic_regression.sas` from the
@@ -98,3 +119,21 @@ One note: the code printout this script was transcribed from truncates the
 final `PROC SQL` step that compares the full and null model
 −2 log-likelihoods, so that step is reproduced in the script only as far
 as the printout shows.
+
+## Files
+
+```
+cranfield-logistic-regression/
+├── README.md
+├── LICENSE
+├── code/
+│   └── cranfield_logistic_regression.sas   # SAS code for the full analysis
+├── data/
+│   └── Cranfield.csv                      # 429 firms
+├── images/
+│   ├── success-proportions-incentive.png   # Success proportions vs. incentives
+│   ├── roc-curve.png                       # ROC curve, AUC 0.7048
+│   └── deviance-residuals-histogram.png    # Deviance residual distribution
+└── report/
+    └── Cranfield_Logistic_Regression.pdf   # Full written report with SAS output
+```
